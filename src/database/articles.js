@@ -28,18 +28,18 @@ export async function createOrUpdateArticles(id, url, wordCount) {
     return await get(id)
 }
 
-export async function getArticles(id) {
+export async function getArticle(id) {
     const results = await db.query(sql`
-      SELECT value FROM article_data WHERE id=${id};
+      SELECT * FROM article_data WHERE id=${id};
     `);
     if (results.length) {
-        return results[0].value;
+        return results[0];
     } else {
         return undefined;
     }
 }
 
-export async function removeArticles(id) {
+export async function removeArticle(id) {
     return await db.query(sql`
       DELETE FROM article_data WHERE id=${id};
     `);

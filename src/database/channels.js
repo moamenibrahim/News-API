@@ -34,7 +34,7 @@ export async function getChannel(id) {
       SELECT * FROM channel_data WHERE channelId=${id};
     `);
     if (results.length) {
-        return results[0].value;
+        return results[0];
     } else {
         return undefined;
     }

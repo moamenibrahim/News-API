@@ -6,7 +6,7 @@ import textract from 'textract'
 import pkg from 'words-count';
 const { wordsCount } = pkg;
 
-import { listArticles, getArticles, createOrUpdateArticles, removeArticles } from '../database/articles.js'
+import { listArticles, getArticle, createOrUpdateArticles, removeArticle } from '../database/articles.js'
 
 let articlesRoute = express.Router();
 
@@ -17,28 +17,24 @@ let articlesRoute = express.Router();
  *     Article:
  *       type: object
  *       required:
- *         - userId
- *         - title
- *         - body
+ *         - url
+ *         - channel
  *       properties:
- *         id:
+ *         articleId:
  *           type: integer
  *           description: The Auto-generated id of a Article
- *         userId:
- *           type: integer
- *           description: id of author
- *         title:
+ *         url:
  *           type: string
- *           description: title of Article
- *         body:
+ *           description: URL of the article
+ *         channel:
  *           type: string
- *           descripton: content of Article *
+ *           description: Channel name
  *       example:
- *         id: 1
- *         userId: 1
- *         title: my title
- *         body: my article
+ *         articleId: 1
+ *         url: https://edition.cnn.com/2022/03/14/politics/us-china-russia-ukraine/index.html
+ *         channel: CNN
  */
+
 
 /**
  * @swagger
@@ -87,7 +83,7 @@ articlesRoute.post('/articles', async function (req, res) {
             res.json()
         } else {
             let words_counts = wordsCount(text)
-            const result = await createOrUpdateArticles(data.id, data.url, words_counts)
+            const result = await createOrUpdateArticles(data.articleId, data.url, words_counts)
             res.json({ result })
         }
     })
@@ -111,7 +107,7 @@ articlesRoute.post('/articles', async function (req, res) {
  */
 articlesRoute.get('/articles/:id', async function (req, res) {
     const id = req.params.id
-    const newsCard = await getArticles(id)
+    const newsCard = await getArticle(id)
     res.json({ newsCard })
 })
 
@@ -133,7 +129,7 @@ articlesRoute.get('/articles/:id', async function (req, res) {
  */
 articlesRoute.delete('/articles/:id', async function (req, res) {
     const id = req.params.id
-    await removeArticles(id)
+    await removeArticle(id)
     res.json({ id })
 })
 
