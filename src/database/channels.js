@@ -25,7 +25,6 @@ export async function createOrUpdateChannels(name, description) {
     const id = await db.query(sql`
       SELECT last_insert_rowid();
     `);
-    console.log(id[0]['last_insert_rowid()'])
     return getChannel(id[0]['last_insert_rowid()'])
 }
 

@@ -77,7 +77,7 @@ channelsRoute.post('/channels', async function (req, res) {
  * @swagger
  * /channels/:id:
  *   get:
- *     summary: Returns am channel
+ *     summary: Returns a channel
  *     tags: [Channels]
  *     responses:
  *       200:
@@ -99,7 +99,7 @@ channelsRoute.get('/channels/:id', async function (req, res) {
  * @swagger
  * /channels/:id:
  *   delete:
- *     summary: delete a channel
+ *     summary: Delete a channel
  *     tags: [Channels]
  *     responses:
  *       200:

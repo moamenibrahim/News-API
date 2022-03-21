@@ -44,8 +44,8 @@ app.use('/api', articlesRoute)
 app.use('/api', channelsRoute)
 
 var server = app.listen(8081, async function () {
-  await prepareArticles();
   await prepareChannels();
+  await prepareArticles();
 
   var host = server.address().address
   var port = server.address().port

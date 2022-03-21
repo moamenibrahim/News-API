@@ -6,7 +6,7 @@ import textract from 'textract'
 import pkg from 'words-count';
 const { wordsCount } = pkg;
 
-import { listArticles, getArticle, createOrUpdateArticles, removeArticle } from '../database/articles.js'
+import { listArticles, getArticle, createOrUpdateArticles, removeArticle, searchArticle } from '../database/articles.js'
 
 let articlesRoute = express.Router();
 
@@ -83,7 +83,7 @@ articlesRoute.post('/articles', async function (req, res) {
             res.json()
         } else {
             let words_counts = wordsCount(text)
-            const result = await createOrUpdateArticles(data.articleId, data.url, words_counts)
+            const result = await createOrUpdateArticles(data.url, words_counts, data.channel)
             res.json({ result })
         }
     })
@@ -113,9 +113,39 @@ articlesRoute.get('/articles/:id', async function (req, res) {
 
 /**
  * @swagger
+ * /articles/search/?min=minCount&max=maxCount:
+ *   get:
+ *     summary: Search for an article with word count
+ *     tags: [Articles]
+ *     responses:
+ *       200:
+ *         description: An article element
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Article'
+ */
+articlesRoute.get('/search', async function (req, res) {
+    const min = req.query.min
+    const max = req.query.max
+    if (min > max) {
+        res.status(400)
+        res.render('error', {error: new Error('minCount cannot be bigger than maxCount')})
+    } else if (min < 0) {
+        res.status(400)
+        res.render('error', {error: new Error('minCount cannot be less than zero')})
+    }
+    const newsCard = await searchArticle(min, max)
+    res.json({ newsCard })
+})
+
+/**
+ * @swagger
  * /articles/:id:
  *   delete:
- *     summary: delete an article
+ *     summary: Delete an article
  *     tags: [Articles]
  *     responses:
  *       200:
