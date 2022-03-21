@@ -6,7 +6,8 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import articlesRoute from './routes/articles.js';
 import channelsRoute from './routes/channels.js';
 
-import { prepare } from './database/index.js';
+import { prepareArticles } from './database/articles.js';
+import { prepareChannels } from './database/channels.js';
 
 var app = express();
 
@@ -43,7 +44,9 @@ app.use('/api', articlesRoute)
 app.use('/api', channelsRoute)
 
 var server = app.listen(8081, async function () {
-  await prepare();
+  await prepareArticles();
+  await prepareChannels();
+
   var host = server.address().address
   var port = server.address().port
   console.log('Example app listening at http://%s:%s', host, port)

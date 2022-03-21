@@ -6,7 +6,7 @@ import textract from 'textract'
 import pkg from 'words-count';
 const { wordsCount } = pkg;
 
-import { list, get, createOrUpdate, remove } from '../database/index.js'
+import { listArticles, getArticles, createOrUpdateArticles, removeArticles } from '../database/articles.js'
 
 let articlesRoute = express.Router();
 
@@ -57,7 +57,7 @@ let articlesRoute = express.Router();
  *                 $ref: '#/components/schemas/Article'
  */
 articlesRoute.get('/articles', async function (_, res) {
-    const articles = await list()
+    const articles = await listArticles()
     res.json({ articles })
 })
 
@@ -84,9 +84,10 @@ articlesRoute.post('/articles', async function (req, res) {
     textract.fromUrl(data.url, async function (error, text) {
         if (error) {
             console.error(error)
+            res.json()
         } else {
             let words_counts = wordsCount(text)
-            const result = await createOrUpdate(data.id, data.url, words_counts)
+            const result = await createOrUpdateArticles(data.id, data.url, words_counts)
             res.json({ result })
         }
     })
@@ -110,7 +111,7 @@ articlesRoute.post('/articles', async function (req, res) {
  */
 articlesRoute.get('/articles/:id', async function (req, res) {
     const id = req.params.id
-    const newsCard = await get(id)
+    const newsCard = await getArticles(id)
     res.json({ newsCard })
 })
 
@@ -132,7 +133,7 @@ articlesRoute.get('/articles/:id', async function (req, res) {
  */
 articlesRoute.delete('/articles/:id', async function (req, res) {
     const id = req.params.id
-    await remove(id)
+    await removeArticles(id)
     res.json({ id })
 })
 

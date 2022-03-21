@@ -1,5 +1,5 @@
 import express from 'express'
-import { get, createOrUpdate, remove, list } from '../database/index.js'
+import { listChannels, createOrUpdateChannels, getChannel, removeChannels } from '../database/channels.js'
 
 let channelsRoute = express.Router();
 
@@ -10,27 +10,27 @@ let channelsRoute = express.Router();
  *     Channel:
  *       type: object
  *       required:
- *         - userId
- *         - title
- *         - body
+ *         - channelId
+ *         - name
+ *         - description
  *       properties:
  *         id:
  *           type: integer
  *           description: The Auto-generated id of a Channel
- *         userId:
+ *         channelId:
  *           type: integer
- *           description: id of author
- *         title:
+ *           description: id of channel
+ *         name:
  *           type: string
- *           description: title of Channel
- *         body:
+ *           description: name of Channel
+ *         description:
  *           type: string
- *           descripton: content of Channel *
+ *           descripton: description of Channel *
  *       example:
  *         id: 1
- *         userId: 1
- *         title: my title
- *         body: my article
+ *         channelId: 1
+ *         name: CNN
+ *         descripton: US news agency
  */
 
 /**
@@ -51,25 +51,25 @@ let channelsRoute = express.Router();
  */
 
 channelsRoute.get('/channels', async function (req, res) {
-    const result = await list()
+    const result = await listChannels()
     res.json({ result })
 })
 
 channelsRoute.post('/channels', async function (req, res) {
     const data = req.body
-    const result = await createOrUpdate(data.id, data.url)
+    const result = await createOrUpdateChannels(data.name, data.description)
     res.json({ result })
 })
 
 channelsRoute.get('/channels/:id', async function (req, res) {
     const id = req.params.id
-    const newsCard = await get(id)
+    const newsCard = await getChannel(id)
     res.json({ newsCard })
 })
 
 channelsRoute.delete('/channels', async function (req, res) {
     const id = req.params.id
-    await remove(id)
+    await removeChannels(id)
     res.json({ success: true, removed: id })
 })
 
