@@ -10,7 +10,7 @@ describe('POST Create an Article', () => {
             .send({})
             .expect(201)
             .then((res) => {
-                expect(res.headers.location).to.be.eql('');
+                expect(res.headers.location).toEqual('');
             });
     });
 });

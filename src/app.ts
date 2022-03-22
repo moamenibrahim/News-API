@@ -3,8 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import swaggerUI from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
-import articlesRoute from './routes/articles.js';
-import channelsRoute from './routes/channels.js';
+import articlesRoute from './routes/articles';
+import channelsRoute from './routes/channels';
 
 var app = express();
 

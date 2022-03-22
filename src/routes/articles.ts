@@ -3,10 +3,9 @@ import textract from 'textract'
 
 // Module 'words-count' is a CommonJS module
 // which may not support all module.exports as named exports
-import pkg from 'words-count';
-const { wordsCount } = pkg;
+import { wordsCount } from 'words-count';
 
-import { listArticles, getArticle, createOrUpdateArticles, removeArticle, searchArticle } from '../database/articles.js'
+import { listArticles, getArticle, createOrUpdateArticles, removeArticle, searchArticle } from '../database/articles'
 
 let articlesRoute = express.Router();
 

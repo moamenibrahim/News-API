@@ -1,7 +1,7 @@
-import app from './app.js'
+import app from './app'
 
-import { prepareArticles } from './database/articles.js';
-import { prepareChannels } from './database/channels.js';
+import { prepareArticles } from './database/articles';
+import { prepareChannels } from './database/channels';
 
 
 var server = app.listen(8081, async function () {

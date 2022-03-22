@@ -1,5 +1,5 @@
 import express from 'express'
-import { listChannels, createOrUpdateChannels, getChannel, removeChannels } from '../database/channels.js'
+import { listChannels, createOrUpdateChannels, getChannel, removeChannels } from '../database/channels'
 
 let channelsRoute = express.Router();
 
