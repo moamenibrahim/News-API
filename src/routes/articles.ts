@@ -136,8 +136,8 @@ articlesRoute.get('/search', async function (req, res) {
         res.status(400)
         res.render('error', {error: new Error('minCount cannot be less than zero')})
     }
-    const newsCard = await searchArticle(min, max)
-    res.json({ newsCard })
+    const result = await searchArticle(min, max)
+    res.json({ result })
 })
 
 /**

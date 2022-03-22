@@ -6,6 +6,9 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import articlesRoute from './routes/articles';
 import channelsRoute from './routes/channels';
 
+import { prepareArticles } from './database/articles';
+import { prepareChannels } from './database/channels';
+
 var app = express();
 
 const options = {
@@ -39,5 +42,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/api', articlesRoute)
 app.use('/api', channelsRoute)
+
+export async function startDB() {
+  await prepareChannels();
+  await prepareArticles();
+}
 
 export default app
