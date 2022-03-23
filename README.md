@@ -37,6 +37,8 @@ docker build . -t news-app
 docker run -p 8081:8081 -d news-app
 ```
 
+Access the Swagger API documentation page: `localhost:8081/api-docs`
+
 ## Tests
 
 ```bash
