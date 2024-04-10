@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@databases/sqlite": "^3.0.0",
+    "@databases/sqlite": "^4.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "jest": "^27.5.1",
